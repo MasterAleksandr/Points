@@ -1,5 +1,7 @@
 from PIL import Image, ImageTk
 import Bot
+from TCPClient import Client
+
 
 countOfPoints = 0
 WIDTH = 12
@@ -16,13 +18,25 @@ class Click:
             event.widget.config(image=point)
             board[i][j] = point
             countOfPoints += 1
-            point = pingPoint = ImageTk.PhotoImage(Image.open("pingPoint.png"))
-            coordinate = Bot.Bot.MarkPoint(i, j, board, 12, 12)
-            board[coordinate.x][coordinate.y] = pingPoint
-            cells[coordinate.x][coordinate.y].config(image=point)
+            Client.send(board)
+            board = Click.decode_string_to_map(Client.listen())
+            Click.draw_board(board, cells)
             countOfPoints += 1
             '''check_end_game(countOfPoints)'''
             print(countOfPoints)
+
+    def draw_board(self, board, cells):
+        ping = ImageTk.PhotoImage(Image.open("pingPoint.png"))
+        empty = ImageTk.PhotoImage(Image.open("mainEmpty.png"))
+        blue = ImageTk.PhotoImage(Image.open("bluePoint.png"))
+        for i in range(HEIGHT):
+            for j in range(WIDTH):
+                if board[i][j] == None:
+                    cells[i][j].config(image = empty)
+                if board[i][j] == ping:
+                    cells[i][j].config(image = ping)
+                if board[i][j] == blue:
+                    cells[i][j].config(image = blue)
 
     def cod_map_to_string(self, board):
         map_string = ""
