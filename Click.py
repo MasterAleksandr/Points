@@ -6,7 +6,7 @@ WIDTH = 12
 HEIGHT = 12
 
 
-class Click():
+class Click:
     WIDTH = 12
 
     def on_click(i, j, event, board, cells):

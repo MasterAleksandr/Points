@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
-import Bot
+from Bot import Bot
 import socket
 from Click import Click
 import time
@@ -30,7 +30,7 @@ for i in range(HEIGHT):
     for j in range(WIDTH):
         cell = Label(root, image=cellPng, bg="black")
         cell.grid(row=i, column=j)
-        cell.bind('<Button-1>', lambda e, i=i, j=j: Click.on_click(i, j, e, board, cells))
+        cell.bind('<Button-1>', lambda e, i=i, j=j: Bot.on_click(i, j, e, board, cells))
         cells[i][j] = cell
 
 i = 1
